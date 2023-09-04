@@ -2,7 +2,7 @@ import { dispatch } from "./dispatch.ts";
 import { fibonacci } from "./fibonacci.ts";
 import { calculatePrimes } from "./calculate-primes.ts";
 
-const [response1, response2] = await Promise.allSettled([
+const responses = await Promise.allSettled([
   dispatch(
     fibonacci,
     [1000],
@@ -13,5 +13,6 @@ const [response1, response2] = await Promise.allSettled([
   ),
 ]);
 
-response1.status === "fulfilled" ? console.log(response1.value) : console.error(response1.reason);
-response2.status === "fulfilled" ? console.log(response2.value) : console.error(response2.reason);
+for (const response of responses) {
+  response.status === "fulfilled" ? console.log(response.value) : console.error(response.reason);
+}
